@@ -18,19 +18,6 @@ public class WebSteps {
     private SelenideElement currentBlock;
     private final String popOver = ".//div[contains(@class,'pop-over is-shown')]";
 
-    public void setUp() {
-        Configuration.baseUrl = "https://trello.com/";
-        Configuration.browser = "chrome";
-        //Размер окна браузера
-        Configuration.browserSize = "1920x1080";
-        Configuration.browserVersion = "108.0.5359.22";
-        //Создаём объект класса DesiredCapabilities, используется как настройка  вашей конфигурации с помощью пары ключ-значение
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        //Включить поддержку отображения экрана браузера во время выполнения теста
-        capabilities.setCapability("enableVNC", true);
-        //Переопределяем Browser capabilities
-        Configuration.browserCapabilities = capabilities;
-    }
     /**
      * Открытие сайта
      */

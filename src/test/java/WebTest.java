@@ -11,6 +11,7 @@ import utils.PropertiesUtil;
 
 public class WebTest {
     private final WebSteps webSteps = new WebSteps();
+    private final WebCheck webCheck = new WebCheck();
 
     @BeforeClass
     public void setUp() {
@@ -24,7 +25,6 @@ public class WebTest {
     }
 
     public void login() {
-
         webSteps.clickButtonWithText("Log in");
         final String login = PropertiesUtil.get("test.user");
         webSteps.inputTextInField("Укажите адрес электронной почты", login);
@@ -41,8 +41,7 @@ public class WebTest {
         webSteps.clickElementContainsText("Ученики");
 
 //Шаг 1. Удостовериться, что карточка находится в колонке Done
-        //отображается колонка Done
-        //колонка Done содержит карточку
+        webCheck.checkCardInList("Done", "Карточка для изучения API");
 
 //Шаг 2. Удостовериться, все пункты чек-боксов выполнены
         //открыть карточку
@@ -74,9 +73,14 @@ public class WebTest {
         webSteps.inputTextInField("Название", "Высокий приоритет");
         webSteps.clickElementContainsText("Создание");
         Selenide.sleep(1000);
-//Шаг 7. Выбрать тип команды "Образование"
+
+//Шаг 7.
 
 //Шаг 8. Сменить имя доски "Только для образования"
 
+    }
+
+    public void after(){
+        //удалить доску
     }
 }

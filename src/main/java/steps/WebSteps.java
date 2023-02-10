@@ -1,13 +1,10 @@
 package steps;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import support.Color;
-import utils.PropertiesUtil;
 
 import java.time.Duration;
 
@@ -25,13 +22,17 @@ public class WebSteps {
         Selenide.open(url);
         Selenide.sleep(500);
     }
+
     @Step("Нажать на элемент, содержащий текст '{text}' ")
     public void clickElementContainsText(String text) {
-        $x(String.format(".//*[contains(text(),'%1$s')]"+
-                "| .//*[contains(@aria-label,'%1$s')]"+
-                "| .//a[contains(@title,'%1$s')]", text)).click();
+        $x(String.format(".//*[contains(text(),'%1$s')]" +
+                "| .//*[contains(@aria-label,'%1$s')]" +
+                "| .//a[contains(@title,'%1$s')]", text))
+                .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
+                .click();
         Selenide.sleep(500);
     }
+
     @Step("Нажать на элемент c текстом '{text}' ")
     public void clickElementWithText(String text) {
         $x(String.format(".//span[text()='%1$s']", text))
@@ -39,12 +40,21 @@ public class WebSteps {
                 .click();
         Selenide.sleep(500);
     }
+
+    @Step("Нажать на кнопку, содержащую текст '{text}' ")
+    public void clickButtonContainsText(String text) {
+        $x(String.format(".//button[@aria-label='%1$s']" +
+                "| .//button[contains(text(),'%1$s')]" +
+                "| .//input[contains(@value,'%1$s')]" +
+                "| .//div[contains(@class,'Buttonsstyles')]/a[text()='%1$s']", text))
+                .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
+                .click();
+        Selenide.sleep(500);
+    }
+
     @Step("Нажать на кнопку с текстом '{text}' ")
     public void clickButtonWithText(String text) {
-        $x(String.format(".//button[@aria-label='%1$s']"+
-                "| .//button[contains(text(),'%1$s')]"+
-                "| .//input[contains(@value,'%1$s')]"+
-                "| .//div[contains(@class,'Buttonsstyles')]/a[text()='%1$s']", text))
+        $x(String.format(".//button[text()='%1$s']", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(500);
@@ -60,7 +70,14 @@ public class WebSteps {
         Selenide.sleep(500);
     }
 
-    //*[contains(text(),'%s')]/ancestor::div[contains(@class,'list-wrapper')]
+    @Step("Ввести в текстовый редактор значение '{text}' ")
+    public void inputTextInTextBox(String text) {
+        $x(".//div[@role='textbox']")
+                .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
+                .setValue(text);
+        Selenide.sleep(500);
+    }
+
     public void setCurrentBlock(String currentBlock) {
         this.currentBlock = $x(String.format("//*[contains(text(),'%1$s')]/ancestor::div[contains(@class,'list-wrapper')]" +
                 "| .//*[contains(text(),'%1$s')]/ancestor::section", currentBlock));
@@ -71,15 +88,17 @@ public class WebSteps {
      */
     public void inCurrentBlockClickElementWithText(String text) {
         currentBlock.$x(String.format("//*[contains(text(),'%1$s')]" +
-                "| //input[contains(@value,'%1$s')]",text)).click();
+                        "| //input[contains(@value,'%1$s')]", text))
+                .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
+                .click();
     }
 
-    public void setColorForCurrentCard(String block, Color color){
-        String clr =  color.getCode();
+    public void setColorForCurrentCard(String block, Color color) {
+        String clr = color.getCode();
 
-        SelenideElement colorBlock= $x(String.format(".//h4[contains(text(),'%s')]/following-sibling::div[1]",block))
-                .shouldBe(Condition.exist,Duration.ofSeconds(TIMEOUT));
-        colorBlock.$x(String.format(".//button[contains(@class,'%s')]",clr))
+        SelenideElement colorBlock = $x(String.format(".//h4[contains(text(),'%s')]/following-sibling::div[1]", block))
+                .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT));
+        colorBlock.$x(String.format(".//button[contains(@class,'%s')]", clr))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         //закрываем pop over
@@ -91,11 +110,12 @@ public class WebSteps {
         $x(String.format(".//*[contains(text(),'%1$s')]/following-sibling::label" +
                 "| .//*[contains(@aria-label,'%1$s')]", name))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
-                        .click();
+                .click();
         Selenide.sleep(500);
     }
+
     @Step("Закрыть блок")
-    public void closeBlock(){
+    public void closeBlock() {
         $x(popOver).$x(".//*[contains(@class,'icon-close')]")
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();

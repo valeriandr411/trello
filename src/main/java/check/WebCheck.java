@@ -3,15 +3,14 @@ package check;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
 import support.Color;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$x;
 
 public class WebCheck {
-
-    public void test() {
-    }
+    private final int TIMEOUT = 20;
 
     public void checkColorInCurrentCard(Color color) {
         String clr = color.getCode();
@@ -63,6 +62,21 @@ public class WebCheck {
                 .$x(String.format("./following-sibling::div[contains(@class,'list-cards')]/descendant::span[text()='%s']", card))
                 .shouldBe(Condition.exist
                         .because(String.format("В сколнке '%s' не найдена карточка '%s'", list, card)));
+        Selenide.sleep(500);
+    }
+
+    /**
+     * Метод, проверяющий состояние чекбокса
+     *
+     * @param item название чекбокса
+     */
+    public void checkIfCheckboxIsComplete(String item) {
+        $x(String.format(".//*[contains(@class,'checklist-item') and contains(text(),'%s')]", item))
+                .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
+                .$x("./ancestor::div[contains(@class,'checklist-item-state-complete')]")
+                .shouldBe(Condition.exist
+                                .because(String.format("Чекбокс '%s' деактивирован", item)),
+                        Duration.ofSeconds(TIMEOUT));
         Selenide.sleep(500);
     }
 }

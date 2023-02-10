@@ -14,7 +14,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class WebSteps {
-    private final int TIMEOUT = 60;
+    private final int TIMEOUT = 20;
     private SelenideElement currentBlock;
     private final String popOver = ".//div[contains(@class,'pop-over is-shown')]";
 
@@ -74,11 +74,11 @@ public class WebSteps {
                 "| //input[contains(@value,'%1$s')]",text)).click();
     }
 
-    public void setColorForCurrentCard(Color color){
+    public void setColorForCurrentCard(String block, Color color){
         String clr =  color.getCode();
 
-        SelenideElement colorBlock= $x(".//h4[contains(text(),'Цвета')]/following-sibling::div[1]")
-                .shouldBe(Condition.exist);
+        SelenideElement colorBlock= $x(String.format(".//h4[contains(text(),'%s')]/following-sibling::div[1]",block))
+                .shouldBe(Condition.exist,Duration.ofSeconds(TIMEOUT));
         colorBlock.$x(String.format(".//button[contains(@class,'%s')]",clr))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();

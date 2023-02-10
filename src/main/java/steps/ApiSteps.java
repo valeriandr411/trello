@@ -22,7 +22,7 @@ public class ApiSteps {
     private static final String KEY = JDBCPostgreSQL.getKey(PropertiesUtil.get("test.user"));
     private static final String TOKEN = JDBCPostgreSQL.getToken(PropertiesUtil.get("test.user"));
 
-    //--------------------------------ДОСКИ----------------------------------------//
+    //--------------------------------Р”РћРЎРљР----------------------------------------//
     public String createBoard(String name) throws JSONException {
         JSONObject requestBody = new JSONObject()
                 .put("name", name);
@@ -84,7 +84,7 @@ public class ApiSteps {
                         });
     }
 
-    //----------------------------------ЧЕК-ЛИСТ-------------------------------------------//
+    //----------------------------------Р§Р•Рљ-Р›РРЎРў-------------------------------------------//
     public String createChecklist(String idCard) throws JSONException {
         JSONObject requestBody = new JSONObject()
                 .put("idCard", idCard);
@@ -124,11 +124,11 @@ public class ApiSteps {
     }
 
     /**
-     * Метод, позволяющий ментять состояние чек-бокса в карточке
+     * РњРµС‚РѕРґ, РїРѕР·РІРѕР»СЏСЋС‰РёР№ РјРµРЅС‚СЏС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ С‡РµРє-Р±РѕРєСЃР° РІ РєР°СЂС‚РѕС‡РєРµ
      *
-     * @param idCard      id карточки
-     * @param idCheckItem id чек-бокса
-     * @param state       состояние, в которое нужно перевести чек-бокс: complete, incomplete.
+     * @param idCard      id РєР°СЂС‚РѕС‡РєРё
+     * @param idCheckItem id С‡РµРє-Р±РѕРєСЃР°
+     * @param state       СЃРѕСЃС‚РѕСЏРЅРёРµ, РІ РєРѕС‚РѕСЂРѕРµ РЅСѓР¶РЅРѕ РїРµСЂРµРІРµСЃС‚Рё С‡РµРє-Р±РѕРєСЃ: complete, incomplete.
      * @throws JSONException
      */
     public void changeCheckItemState(String idCard, String idCheckItem, String state) throws JSONException {
@@ -148,13 +148,13 @@ public class ApiSteps {
         response.prettyPrint();
     }
 
-    //----------------------------------КАРТОЧКИ-------------------------------------------//
+    //----------------------------------РљРђР РўРћР§РљР-------------------------------------------//
 
     /**
-     * Метод, позволяющий создавать карточки
-     * @param name название карточки
-     * @param idList id колонки
-     * @return id созданной карточки
+     * РњРµС‚РѕРґ, РїРѕР·РІРѕР»СЏСЋС‰РёР№ СЃРѕР·РґР°РІР°С‚СЊ РєР°СЂС‚РѕС‡РєРё
+     * @param name РЅР°Р·РІР°РЅРёРµ РєР°СЂС‚РѕС‡РєРё
+     * @param idList id РєРѕР»РѕРЅРєРё
+     * @return id СЃРѕР·РґР°РЅРЅРѕР№ РєР°СЂС‚РѕС‡РєРё
      * @throws JSONException
      */
     public String createCard(String name, String idList) throws JSONException {
@@ -178,8 +178,8 @@ public class ApiSteps {
     }
 
     /**
-     * Метод, позволяющий удалить карточку
-     * @param idCard id карточки
+     * РњРµС‚РѕРґ, РїРѕР·РІРѕР»СЏСЋС‰РёР№ СѓРґР°Р»РёС‚СЊ РєР°СЂС‚РѕС‡РєСѓ
+     * @param idCard id РєР°СЂС‚РѕС‡РєРё
      */
     public void deleteCard(String idCard){
             Response response = given()
@@ -196,10 +196,10 @@ public class ApiSteps {
     }
 
     /**
-     * Метод, позволяющий добавить описание к карточке
+     * РњРµС‚РѕРґ, РїРѕР·РІРѕР»СЏСЋС‰РёР№ РґРѕР±Р°РІРёС‚СЊ РѕРїРёСЃР°РЅРёРµ Рє РєР°СЂС‚РѕС‡РєРµ
      *
-     * @param idCard
-     * @param description описание, которое следует добавить
+     * @param idCard id РєР°СЂС‚РѕС‡РєРё
+     * @param description РѕРїРёСЃР°РЅРёРµ, РєРѕС‚РѕСЂРѕРµ СЃР»РµРґСѓРµС‚ РґРѕР±Р°РІРёС‚СЊ
      * @throws JSONException
      */
     public void addDescription(String idCard, String description) throws JSONException {
@@ -220,9 +220,9 @@ public class ApiSteps {
     }
 
     /**
-     * Метод, позволяющий добавлять вложение в карточку
-     * @param idCard id карточки
-     * @param pathName путь к файлу
+     * РњРµС‚РѕРґ, РїРѕР·РІРѕР»СЏСЋС‰РёР№ РґРѕР±Р°РІР»СЏС‚СЊ РІР»РѕР¶РµРЅРёРµ РІ РєР°СЂС‚РѕС‡РєСѓ
+     * @param idCard id РєР°СЂС‚РѕС‡РєРё
+     * @param pathName РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ
      */
     public void createAttachment(String idCard, String pathName){
         File file = new File(pathName);
@@ -241,9 +241,9 @@ public class ApiSteps {
     }
 
     /**
-     * Метод, позволяющий перемещать карточку в колонку
-     * @param idCard id карточки
-     * @param idList id колонки
+     * РњРµС‚РѕРґ, РїРѕР·РІРѕР»СЏСЋС‰РёР№ РїРµСЂРµРјРµС‰Р°С‚СЊ РєР°СЂС‚РѕС‡РєСѓ РІ РєРѕР»РѕРЅРєСѓ
+     * @param idCard id РєР°СЂС‚РѕС‡РєРё
+     * @param idList id РєРѕР»РѕРЅРєРё
      * @throws JSONException
      */
     public void moveCardToList(String idCard, String idList) throws JSONException {
@@ -264,11 +264,11 @@ public class ApiSteps {
     }
 
     /**
-     * Метод, позволяющий изменить дату выполнения в карточки.
-     * Отсчет ведется от текущего дня.
-     * @param idCard id карточки
-     * @param numberDays количество дней, на которое следует увеличить
-     *                   или уменьшить (тогда передается со знаком минус) дату исполнения задачи
+     * РњРµС‚РѕРґ, РїРѕР·РІРѕР»СЏСЋС‰РёР№ РёР·РјРµРЅРёС‚СЊ РґР°С‚Сѓ РІС‹РїРѕР»РЅРµРЅРёСЏ РІ РєР°СЂС‚РѕС‡РєРё.
+     * РћС‚СЃС‡РµС‚ РІРµРґРµС‚СЃСЏ РѕС‚ С‚РµРєСѓС‰РµРіРѕ РґРЅСЏ.
+     * @param idCard id РєР°СЂС‚РѕС‡РєРё
+     * @param numberDays РєРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№, РЅР° РєРѕС‚РѕСЂРѕРµ СЃР»РµРґСѓРµС‚ СѓРІРµР»РёС‡РёС‚СЊ
+     *                   РёР»Рё СѓРјРµРЅСЊС€РёС‚СЊ (С‚РѕРіРґР° РїРµСЂРµРґР°РµС‚СЃСЏ СЃРѕ Р·РЅР°РєРѕРј РјРёРЅСѓСЃ) РґР°С‚Сѓ РёСЃРїРѕР»РЅРµРЅРёСЏ Р·Р°РґР°С‡Рё
      * @throws JSONException
      */
     public void changeDueDate(String idCard,int numberDays) throws JSONException {
@@ -291,14 +291,14 @@ public class ApiSteps {
                 .extract().response();
         response.prettyPrint();
     }
-//----------------------------------КОЛОНКИ-------------------------------------------//
+//----------------------------------РљРћР›РћРќРљР-------------------------------------------//
 
     /**
-     * Метод, создающий новую колонку для заданной доски
+     * РњРµС‚РѕРґ, СЃРѕР·РґР°СЋС‰РёР№ РЅРѕРІСѓСЋ РєРѕР»РѕРЅРєСѓ РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ РґРѕСЃРєРё
      *
-     * @param name    имя колонки
-     * @param idBoard id доски
-     * @return id созданной колонки
+     * @param name    РёРјСЏ РєРѕР»РѕРЅРєРё
+     * @param idBoard id РґРѕСЃРєРё
+     * @return id СЃРѕР·РґР°РЅРЅРѕР№ РєРѕР»РѕРЅРєРё
      * @throws JSONException
      */
     public String createColumn(String name, String idBoard) throws JSONException {
@@ -325,8 +325,8 @@ public class ApiSteps {
 
 
     /**
-     * @param idList id списка
-     * @param value  архивировать - true, вернуть из архива - false
+     * @param idList id СЃРїРёСЃРєР°
+     * @param value  Р°СЂС…РёРІРёСЂРѕРІР°С‚СЊ - true, РІРµСЂРЅСѓС‚СЊ РёР· Р°СЂС…РёРІР° - false
      * @throws JSONException
      */
     public void updateArchiveList(String idList, String value) throws JSONException {

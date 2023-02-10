@@ -4,9 +4,11 @@ import com.codeborne.selenide.Selenide;
 import database.JDBCPostgreSQL;
 import io.qameta.allure.Description;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import steps.WebSteps;
+import support.Color;
 import utils.PropertiesUtil;
 
 public class WebTest {
@@ -27,60 +29,60 @@ public class WebTest {
     public void login() {
         webSteps.clickButtonWithText("Log in");
         final String login = PropertiesUtil.get("test.user");
-        webSteps.inputTextInField("Укажите адрес электронной почты", login);
-        webSteps.clickButtonWithText("Продолжить");
-        webSteps.inputTextInField("Введите пароль", JDBCPostgreSQL.getPassword(login));
-        webSteps.clickElementWithText("Войти");
+        webSteps.inputTextInField("РЈРєР°Р¶РёС‚Рµ Р°РґСЂРµСЃ СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїРѕС‡С‚С‹", login);
+        webSteps.clickButtonWithText("РџСЂРѕРґРѕР»Р¶РёС‚СЊ");
+        webSteps.inputTextInField("Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ", JDBCPostgreSQL.getPassword(login));
+        webSteps.clickElementWithText("Р’РѕР№С‚Рё");
     }
 
     @Test
-    @Description(value = "Тестирование UI")
+    @Description(value = "РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ UI")
     public void uiTest() {
         webSteps.openUrl("https://trello.com/");
         login();
-        webSteps.clickElementContainsText("Ученики");
+        webSteps.clickElementContainsText("РЈС‡РµРЅРёРєРё");
 
-//Шаг 1. Удостовериться, что карточка находится в колонке Done
-        webCheck.checkCardInList("Done", "Карточка для изучения API");
+//РЁР°Рі 1. РЈРґРѕСЃС‚РѕРІРµСЂРёС‚СЊСЃСЏ, С‡С‚Рѕ РєР°СЂС‚РѕС‡РєР° РЅР°С…РѕРґРёС‚СЃСЏ РІ РєРѕР»РѕРЅРєРµ Done
+        webCheck.checkCardInList("Done", "РљР°СЂС‚РѕС‡РєР° РґР»СЏ РёР·СѓС‡РµРЅРёСЏ API");
 
-//Шаг 2. Удостовериться, все пункты чек-боксов выполнены
-        //открыть карточку
-        //проверить, что карточка содержит чеклист
-        //каждый элемент в классе содержит : state-complete
+//РЁР°Рі 2. РЈРґРѕСЃС‚РѕРІРµСЂРёС‚СЊСЃСЏ, РІСЃРµ РїСѓРЅРєС‚С‹ С‡РµРє-Р±РѕРєСЃРѕРІ РІС‹РїРѕР»РЅРµРЅС‹
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ : state-complete
 
-//Шаг 3. Поставить обложку с зеленым цветом
-        webSteps.clickElementContainsText("Карточка для изучения API");
-        // webSteps.clickElementWithText("Обложка");
-        // webSteps.setColorForCurrentCard(Color.BLUE);
+//РЁР°Рі 3. РџРѕСЃС‚Р°РІРёС‚СЊ РѕР±Р»РѕР¶РєСѓ СЃ Р·РµР»РµРЅС‹Рј С†РІРµС‚РѕРј
+        webSteps.clickElementContainsText("РљР°СЂС‚РѕС‡РєР° РґР»СЏ РёР·СѓС‡РµРЅРёСЏ API");
+        webSteps.clickElementWithText("РћР±Р»РѕР¶РєР°");
+        webSteps.setColorForCurrentCard("Р¦РІРµС‚Р°", Color.BLUE);
 
-//Шаг 4. Отметить, что задача выполнена в срок
-//        webSteps.clickElementWithText("Даты");
-//        webSteps.activatedCheckBox("Срок");
-//        webSteps.clickElementWithText("Сохранить");
-//        webSteps.activatedCheckBox("Отметить как выполненное в срок");
+//РЁР°Рі 4. РћС‚РјРµС‚РёС‚СЊ, С‡С‚Рѕ Р·Р°РґР°С‡Р° РІС‹РїРѕР»РЅРµРЅР° РІ СЃСЂРѕРє
+//        webSteps.clickElementWithText("Р”Р°С‚С‹");
+//        webSteps.activatedCheckBox("РЎСЂРѕРє");
+//        webSteps.clickElementWithText("РЎРѕС…СЂР°РЅРёС‚СЊ);
+//        webSteps.activatedCheckBox("РЎСЂРѕРє РєР°СЂС‚РѕС‡РєРё РёСЃС‚РµРєР°РµС‚ РЅРµ СЃРєРѕСЂРѕ");
 
-//Шаг 5. Сменить фон доски на зеленый цвет
-        webSteps.clickElementContainsText("Закрыть диалоговое окно");
-        webSteps.clickButtonWithText("Меню");
-        webSteps.clickElementContainsText("Сменить фон");
-        webSteps.clickElementContainsText("Цвета");
-        webSteps.clickElementContainsText("Закрыть меню");
+//РЁР°Рі 5. вЂў	РЎРјРµРЅРёС‚СЊ С„РѕРЅ РґРѕСЃРєРё РЅР° Р·РµР»РµРЅС‹Р№ С†РІРµС‚
+//        webSteps.clickElementContainsText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
+//        webSteps.clickButtonWithText("РјРµРЅСЋ");
+//        webSteps.clickElementContainsText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ");
+//        webSteps.clickElementContainsText("пїЅпїЅпїЅпїЅпїЅ");
+//        webSteps.clickElementContainsText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
 
-//Шаг 6. Создать для карточки метку зеленого цвета: Высокий приоритет
-        webSteps.clickElementContainsText("Карточка для изучения API");
-        webSteps.clickElementContainsText("Метки");
-        webSteps.clickButtonWithText("Создать новую метку");
-        webSteps.inputTextInField("Название", "Высокий приоритет");
-        webSteps.clickElementContainsText("Создание");
+//РЁР°Рі 6. Р”РѕР±Р°РІРёС‚СЊ РјРµС‚РєСѓ Р·РµР»РµРЅРѕРіРѕ С†РІРµС‚Р° СЃ С‚РµРєСЃС‚РѕРј: РЎСЂРµРґРЅРёР№ РїСЂРёРѕСЂРёС‚РµС‚
+        webSteps.clickElementContainsText("РљР°СЂС‚РѕС‡РєР° РґР»СЏ РёР·СѓС‡РµРЅРёСЏ API");
+        webSteps.clickElementContainsText("РњРµС‚РєРё");
+        webSteps.clickButtonWithText("РЎРѕР·РґР°С‚СЊ РЅРѕРІСѓСЋ РјРµС‚РєСѓ");
+        webSteps.inputTextInField("РќР°Р·РІР°РЅРёРµ", "РЎСЂРµРґРЅРёР№ РїСЂРёРѕСЂРёС‚РµС‚");
+        webSteps.clickElementContainsText("РЎРѕР·РґР°РЅРёРµ");
         Selenide.sleep(1000);
 
-//Шаг 7.
+//РЁР°Рі 7.
 
-//Шаг 8. Сменить имя доски "Только для образования"
+//РЁР°Рі 8. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
 
     }
 
-    public void after(){
-        //удалить доску
+    public void after() {
+        //СѓРґР°Р»РёС‚СЊ РґРѕСЃРєСѓ
     }
 }

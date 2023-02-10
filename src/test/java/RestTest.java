@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 public class RestTest {
-    private static ApiSteps apiSteps = new ApiSteps();
+    private static final ApiSteps apiSteps = new ApiSteps();
 
 //    @Test
 //    @Description("1. Тестирование API")
@@ -55,26 +55,6 @@ public class RestTest {
         //
 
 //Шаг 13. Поставить в карточке эмоджи Палец вверх
-    }
-
-  //  @Test
-    public void test() throws JSONException {
-       // apiSteps.deleteBoard("63c009e1012787032ad200ac");
-       // apiSteps.getBoards();
-        String idListDane = "63c180dfa5dd3f0220c9769a";
-       // apiSteps.createCard("Новая карточка", idListDane);
-       // apiSteps.deleteCard("63c6c7917d3652292bbbdc13");
-   //     apiSteps.getCardsOnBoard("63c0f9a9bcc8320114e54021");
-    }
-
-  //  @AfterClass
-    public void after() throws JSONException {
-        List<Map<String, Object>> boards = apiSteps.getBoards();
-        String idBoard;
-        for (int i = 0; i < boards.size(); i++) {
-            idBoard = boards.get(i).get("id").toString();
-            apiSteps.deleteBoard(idBoard);
-        }
     }
 
 }

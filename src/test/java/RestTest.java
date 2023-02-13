@@ -12,7 +12,7 @@ public class RestTest {
     private static final ApiSteps apiSteps = new ApiSteps();
 
 //    @Test
-//    @Description("1. Тестирование API")
+    @Description("Тестирование API")
     public void apiTest() throws JSONException {
 //Шаг 1. Создать доску "KanbanTool"
          String idBoard = apiSteps.createBoard("Новая доска для теста");

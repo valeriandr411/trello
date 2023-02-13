@@ -50,7 +50,6 @@ public class WebTest {
         webCheck.checkIfCheckboxIsComplete("2.Выучить методы запросов");
 
 //Шаг 3. Поставить обложку с зеленым цветом
-        webSteps.clickElementContainsText("Карточка для изучения API");
         webSteps.clickElementWithText("Обложка");
         webSteps.setColorForCurrentCard("Цвета", Color.GREEN);
 

@@ -15,7 +15,7 @@ public class RestTest {
     @Description("Тестирование API")
     public void apiTest() throws JSONException {
 //Шаг 1. Создать доску "KanbanTool"
-         String idBoard = apiSteps.createBoard("Новая доска для теста");
+         String idBoard = apiSteps.createBoard("KanbanTool");
 
 //Шаг 2. Создать колонку "Backlog"
          String idListBacklog = apiSteps.createColumn("Backlog", idBoard);

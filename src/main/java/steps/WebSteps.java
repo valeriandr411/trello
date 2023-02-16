@@ -5,9 +5,8 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.PageManager;
 import io.qameta.allure.Step;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import support.Color;
 
 import java.time.Duration;
@@ -16,14 +15,14 @@ import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.actions;
 
 public class WebSteps {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebSteps.class);
+    private static final Logger LOGGER = Logger.getLogger(WebSteps.class);
     private final int TIMEOUT = 20;
 
     @Step("открыть url '{string}'")
     public void openUrl(String url) {
         Selenide.open(url);
         Selenide.sleep(500);
-        LOGGER.info("открыта ссылка'{}'", url);
+        LOGGER.info(String.format("открыта ссылка'%s'",url));
     }
 
     @Step("Нажать на элемент, содержащий текст '{text}' ")
@@ -34,7 +33,7 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(500);
-        LOGGER.info("нажатие на элемент, содержащий текст '{}'", text);
+        LOGGER.info(String.format("нажатие на элемент, содержащий текст '%s'", text));
     }
 
     @Step("Нажать на элемент c текстом '{text}' ")
@@ -43,7 +42,7 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(500);
-        LOGGER.info("нажатие на элемент c текстом '{}'", text);
+        LOGGER.info(String.format("нажатие на элемент c текстом '%s'", text));
     }
 
     public SelenideElement clickHeader(String name) {
@@ -53,7 +52,7 @@ public class WebSteps {
                         .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT));
         header.click();
         Selenide.sleep(500);
-        LOGGER.info("клик по заголовку '{}'", name);
+        LOGGER.info(String.format("клик по заголовку '%s'", name));
         return header;
     }
 
@@ -64,7 +63,7 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(500);
-        LOGGER.info("нажатие на кнопку c текстом '{}'", text);
+        LOGGER.info(String.format("нажатие на кнопку c текстом '%s'", text));
     }
 
     @Step("Нажать на кнопку, содержащую текст '{text}' ")
@@ -77,7 +76,7 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(500);
-        LOGGER.info("нажатие на кнопку, содержащую текст '{}'", text);
+        LOGGER.info(String.format("нажатие на кнопку, содержащую текст '%s'", text));
     }
 
     public void activatedCheckBox(String name) {
@@ -86,7 +85,7 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(500);
-        LOGGER.info("Чекбокс с текстом '{}' активирован", name);
+        LOGGER.info(String.format("Чекбокс с текстом '%s' активирован", name));
     }
 
     //---------------------------------------------[  INPUT FIELDS ]--------------------------------------------------//
@@ -96,7 +95,7 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .setValue(text);
         Selenide.sleep(500);
-        LOGGER.info("в текстовый редактр введено значение'{}'", text);
+        LOGGER.info(String.format("в текстовый редактр введено значение'%s'", text));
     }
 
     @Step("Ввести в поле '{field}' значение '{text}'")
@@ -107,13 +106,12 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .setValue(text);
         Selenide.sleep(500);
-        LOGGER.info("в поле '{}' введено значение '{}'", field, text);
+        LOGGER.info(String.format("в поле '%1$s' введено значение '%2$s'", field, text));
     }
     //---------------------------------------------------------------------------------------------------------------//
 
     public void setColorForCurrentCard(String block, Color color) {
         String clr = color.getCode();
-
         SelenideElement colorBlock = $x(String.format(".//h4[contains(text(),'%s')]/following-sibling::div[1]", block))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT));
         colorBlock.$x(String.format(".//button[contains(@class,'%s')]", clr))
@@ -121,6 +119,7 @@ public class WebSteps {
                 .click();
         closeBlock();
         Selenide.sleep(500);
+        LOGGER.info(String.format("для блока '%1$s' установлен цвет '%2$s'", block, clr));
     }
 
     //-------------------------------------------------[ BLOCKS ]-------------------------- -------------------------//
@@ -128,7 +127,7 @@ public class WebSteps {
         SelenideElement element = $x(String.format(".//span[contains(text(),'%1$s')]" +
                 "/ancestor::div[@class='pop-over is-shown']", block));
         PageManager.setCurrentBlock(element);
-        LOGGER.info("установить текущий блок");
+        LOGGER.info(String.format("установить блок '%1$s' текущим",block));
     }
 
     public void setCurrBlock(SelenideElement element) {
@@ -141,7 +140,7 @@ public class WebSteps {
         block.$x("./following-sibling::input").shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT)).
                 setValue(text);
         Selenide.sleep(TIMEOUT);
-        LOGGER.info("в текущий блок введен текст'{}'", text);
+        LOGGER.info(String.format("в текущий блок введен текст '%1$s'", text));
     }
 
     /**
@@ -152,7 +151,7 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(TIMEOUT);
-        LOGGER.info("в текущий блок нажат элемент с текстом'{}'", text);
+        LOGGER.info(String.format("в текущий блок нажат элемент с текстом'%1$s'", text));
     }
 
     @Step("Закрыть блок")
@@ -168,13 +167,14 @@ public class WebSteps {
     @Step("нажать клавишу {string}}")
     public void pressKey(String key) {
         actions().keyDown(Keys.valueOf(key)).perform();
-        LOGGER.info("нажата кнопка '{}'", key);
+        LOGGER.info(String.format("нажата кнопка '%1$s'", key));
     }
 
     @Step("отправить сочетание клавиш ctrl + {string}")
     public void sendHotKeyWithCtrl(String key) {
         actions().keyDown(Keys.valueOf("CONTROL")).sendKeys(key)
                 .keyUp(Keys.valueOf("CONTROL")).perform();
+        LOGGER.info(String.format("нажать сочетание клавиш  ctrl + %1$s", key));
     }
 
     //----------------------------------------------------[  PHOTOS  ]--------------------------------------------//
@@ -184,6 +184,6 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(500);
-        LOGGER.info("клик по фото с текстом '{}'", name);
+        LOGGER.info(String.format("установить фон '%1$s'", name));
     }
 }

@@ -7,10 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import io.restassured.response.Response;
 import io.restassured.http.ContentType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import utils.PropertiesUtil;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,7 +21,7 @@ import static io.restassured.RestAssured.given;
 public class ApiSteps {
     private static final String KEY = JDBCPostgreSQL.getKey(PropertiesUtil.get("test.user"));
     private static final String TOKEN = JDBCPostgreSQL.getToken(PropertiesUtil.get("test.user"));
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebSteps.class);
+    private static final Logger LOGGER = Logger.getLogger(WebSteps.class);
 
     //--------------------------------ДОСКИ----------------------------------------//
     public String createBoard(String name) throws JSONException {
@@ -40,6 +38,7 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
+        LOGGER.info(response.asPrettyString());
         return response.jsonPath().getString("id");
     }
 
@@ -54,23 +53,23 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
     }
 
     public List<Map<String, Object>> getBoards() {
         return given()
-                .baseUri("https://api.trello.com/1/members/me")
-                .basePath("/boards")
-                .queryParam("key", KEY)
-                .queryParam("token", TOKEN)
-                .contentType(ContentType.JSON)
-                .when().get()
-                .then()
-                .statusCode(200)
-                .extract()
-                .response()
-                .as(new TypeRef<>() {
-                });
+        .baseUri("https://api.trello.com/1/members/me")
+        .basePath("/boards")
+        .queryParam("key", KEY)
+        .queryParam("token", TOKEN)
+        .contentType(ContentType.JSON)
+        .when().get()
+        .then()
+        .statusCode(200)
+        .extract()
+        .response()
+        .as(new TypeRef<>() {
+        });
     }
 
     public List<Map<String, Object>> getCardsOnBoard(String idBoard) {
@@ -100,12 +99,11 @@ public class ApiSteps {
                 .queryParam("token", TOKEN)
                 .contentType(ContentType.JSON)
                 .body(requestBody.toString())
-
                 .when().post()
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
         return response.jsonPath().getString("id");
     }
 
@@ -119,12 +117,11 @@ public class ApiSteps {
                 .queryParam("token", TOKEN)
                 .contentType(ContentType.JSON)
                 .body(requestBody.toString())
-
                 .when().post()
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
         return response.jsonPath().getString("id");
     }
 
@@ -150,7 +147,8 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //   response.prettyPrint();
     }
 
     //----------------------------------КАРТОЧКИ-------------------------------------------//
@@ -175,11 +173,11 @@ public class ApiSteps {
                 .queryParam("token", TOKEN)
                 .contentType(ContentType.JSON)
                 .body(requestBody.toString())
-
                 .when().post()
                 .then()
                 .statusCode(200)
                 .extract().response();
+        LOGGER.info(response.asPrettyString());
         return response.jsonPath().getString("id");
     }
 
@@ -199,7 +197,8 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //  response.prettyPrint();
     }
 
     /**
@@ -223,7 +222,8 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //response.prettyPrint();
     }
 
     /**
@@ -245,7 +245,8 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //  response.prettyPrint();
     }
 
     /**
@@ -269,7 +270,8 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //    response.prettyPrint();
     }
 
     /**
@@ -299,7 +301,8 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //   response.prettyPrint();
     }
 //----------------------------------КОЛОНКИ-------------------------------------------//
 
@@ -326,10 +329,10 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //  response.prettyPrint();
 
         Selenide.sleep(500);
-
         return response.jsonPath().getString("id");
     }
 
@@ -353,6 +356,7 @@ public class ApiSteps {
                 .then()
                 .statusCode(200)
                 .extract().response();
-        response.prettyPrint();
+        LOGGER.info(response.asPrettyString());
+        //   response.prettyPrint();
     }
 }

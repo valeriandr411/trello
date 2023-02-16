@@ -131,7 +131,7 @@ public class WebSteps {
         LOGGER.info("установить текущий блок");
     }
 
-    public void setCurrBlock(SelenideElement element){
+    public void setCurrBlock(SelenideElement element) {
         PageManager.setCurrentBlock(element);
         LOGGER.info("установить текущий блок");
     }

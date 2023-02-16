@@ -11,18 +11,19 @@ public class ConnectionManager {
     private static final String USER = "db.user";
     private static final String PASS = "db.password";
 
-    private ConnectionManager(){}
+    private ConnectionManager() {
+    }
 
     public static Connection connect() {
-      try {
-          return DriverManager.getConnection(
-                  PropertiesUtil.get(DB_URL),
-                  PropertiesUtil.get(USER),
-                  PropertiesUtil.get(PASS)
-          );
-      }catch (SQLException exception){
-          throw new RuntimeException(exception);
-      }
+        try {
+            return DriverManager.getConnection(
+                    PropertiesUtil.get(DB_URL),
+                    PropertiesUtil.get(USER),
+                    PropertiesUtil.get(PASS)
+            );
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
 }

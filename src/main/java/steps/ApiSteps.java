@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+
 public class ApiSteps {
 
     private static final String KEY = JDBCPostgreSQL.getKey(PropertiesUtil.get("test.user"));
@@ -39,7 +40,8 @@ public class ApiSteps {
                 .extract().response();
         return response.jsonPath().getString("id");
     }
-    public void deleteBoard(String idBoard){
+
+    public void deleteBoard(String idBoard) {
         Response response = given()
                 .baseUri("https://api.trello.com")
                 .basePath("/1/boards/" + idBoard)
@@ -53,7 +55,7 @@ public class ApiSteps {
         response.prettyPrint();
     }
 
-    public  List<Map<String, Object>> getBoards() {
+    public List<Map<String, Object>> getBoards() {
         return given()
                 .baseUri("https://api.trello.com/1/members/me")
                 .basePath("/boards")
@@ -65,23 +67,24 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract()
                 .response()
-                .as(new TypeRef<List<Map<String, Object>>>() {
+                .as(new TypeRef<>() {
                 });
     }
-    public  List<Map<String, Object>> getCardsOnBoard(String idBoard){
-             return    given()
-                        .baseUri("https://api.trello.com")
-                        .basePath("/1/boards/"+idBoard+"/cards")
-                        .queryParam("key", KEY)
-                        .queryParam("token", TOKEN)
-                        .contentType(ContentType.JSON)
-                        .when().get()
-                        .then()
-                        .statusCode(200)
-                        .extract()
-                        .response()
-                        .as(new TypeRef<>() {
-                        });
+
+    public List<Map<String, Object>> getCardsOnBoard(String idBoard) {
+        return given()
+                .baseUri("https://api.trello.com")
+                .basePath("/1/boards/" + idBoard + "/cards")
+                .queryParam("key", KEY)
+                .queryParam("token", TOKEN)
+                .contentType(ContentType.JSON)
+                .when().get()
+                .then()
+                .statusCode(200)
+                .extract()
+                .response()
+                .as(new TypeRef<>() {
+                });
     }
 
     //----------------------------------ЧЕК-ЛИСТ-------------------------------------------//
@@ -152,7 +155,8 @@ public class ApiSteps {
 
     /**
      * Метод, позволяющий создавать карточки
-     * @param name название карточки
+     *
+     * @param name   название карточки
      * @param idList id колонки
      * @return id созданной карточки
      * @throws JSONException
@@ -179,26 +183,27 @@ public class ApiSteps {
 
     /**
      * Метод, позволяющий удалить карточку
+     *
      * @param idCard id карточки
      */
-    public void deleteCard(String idCard){
-            Response response = given()
-                    .baseUri("https://api.trello.com")
-                    .basePath("/1/cards/" + idCard)
-                    .queryParam("key", KEY)
-                    .queryParam("token", TOKEN)
-                    .contentType(ContentType.JSON)
-                    .when().delete()
-                    .then()
-                    .statusCode(200)
-                    .extract().response();
-            response.prettyPrint();
+    public void deleteCard(String idCard) {
+        Response response = given()
+                .baseUri("https://api.trello.com")
+                .basePath("/1/cards/" + idCard)
+                .queryParam("key", KEY)
+                .queryParam("token", TOKEN)
+                .contentType(ContentType.JSON)
+                .when().delete()
+                .then()
+                .statusCode(200)
+                .extract().response();
+        response.prettyPrint();
     }
 
     /**
      * Метод, позволяющий добавить описание к карточке
      *
-     * @param idCard id карточки
+     * @param idCard      id карточки
      * @param description описание, которое следует добавить
      * @throws JSONException
      */
@@ -221,10 +226,11 @@ public class ApiSteps {
 
     /**
      * Метод, позволяющий добавлять вложение в карточку
-     * @param idCard id карточки
+     *
+     * @param idCard   id карточки
      * @param pathName путь к файлу
      */
-    public void createAttachment(String idCard, String pathName){
+    public void createAttachment(String idCard, String pathName) {
         File file = new File(pathName);
         Response response = given()
                 .baseUri("https://api.trello.com")
@@ -242,6 +248,7 @@ public class ApiSteps {
 
     /**
      * Метод, позволяющий перемещать карточку в колонку
+     *
      * @param idCard id карточки
      * @param idList id колонки
      * @throws JSONException
@@ -266,12 +273,13 @@ public class ApiSteps {
     /**
      * Метод, позволяющий изменить дату выполнения в карточки.
      * Отсчет ведется от текущего дня.
-     * @param idCard id карточки
+     *
+     * @param idCard     id карточки
      * @param numberDays количество дней, на которое следует увеличить
      *                   или уменьшить (тогда передается со знаком минус) дату исполнения задачи
      * @throws JSONException
      */
-    public void changeDueDate(String idCard,int numberDays) throws JSONException {
+    public void changeDueDate(String idCard, int numberDays) throws JSONException {
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.DAY_OF_MONTH, numberDays);
         DateFormat df = new SimpleDateFormat("yyyy MM dd");

@@ -9,7 +9,6 @@ import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import support.Color;
-import utils.PropertiesUtil;
 
 import java.time.Duration;
 
@@ -49,13 +48,13 @@ public class WebSteps {
 
     public SelenideElement clickHeader(String name) {
         SelenideElement header =
-                $x(String.format(".//h1[contains(text(),'%s')]", name))
+                $x(String.format(".//h1[contains(text(),'%1$s')]" +
+                        " | .//h2[contains(text(),'%1$s')]", name))
                         .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT));
         header.click();
         Selenide.sleep(500);
         LOGGER.info("клик по заголовку '{}'", name);
         return header;
-
     }
 
     //---------------------------------------------[  BUTTONS  ]--------------------------------------------------//
@@ -73,6 +72,7 @@ public class WebSteps {
         $x(String.format(".//button[@aria-label='%1$s']" +
                 "| .//button[contains(text(),'%1$s')]" +
                 "| .//input[contains(@value,'%1$s')]" +
+                "| .//a[contains(text(),'%1$s')]" +
                 "| .//div[contains(@class,'Buttonsstyles')]/a[text()='%1$s']", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
@@ -124,10 +124,16 @@ public class WebSteps {
     }
 
     //-------------------------------------------------[ BLOCKS ]-------------------------- -------------------------//
-    public SelenideElement setCurrBlock(SelenideElement element) throws Exception {
+    public void setCurrBlock(String block) {
+        SelenideElement element = $x(String.format(".//span[contains(text(),'%1$s')]" +
+                "/ancestor::div[@class='pop-over is-shown']", block));
         PageManager.setCurrentBlock(element);
         LOGGER.info("установить текущий блок");
-        return PageManager.getCurrentBlock();
+    }
+
+    public void setCurrBlock(SelenideElement element){
+        PageManager.setCurrentBlock(element);
+        LOGGER.info("установить текущий блок");
     }
 
     public void inputTextInCurrBlock(String text) throws Exception {
@@ -142,8 +148,7 @@ public class WebSteps {
      * в текущем блоке нажать на элемент с текстом
      */
     public void inCurrentBlockClickElementWithText(String text) throws Exception {
-        PageManager.getCurrentBlock().$x(String.format("//*[contains(text(),'%1$s')]" +
-                        "| //input[contains(@value,'%1$s')]", text))
+        PageManager.getCurrentBlock().$x(String.format("./descendant::input[contains(@value,'%1$s')]", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         Selenide.sleep(TIMEOUT);

@@ -1,17 +1,12 @@
 import io.qameta.allure.Description;
 import org.json.JSONException;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import steps.ApiSteps;
-
-import java.util.List;
-import java.util.Map;
-
 
 public class RestTest {
     private static final ApiSteps apiSteps = new ApiSteps();
 
-//    @Test
+    @Test
     @Description("Тестирование API")
     public void apiTest() throws JSONException {
 //Шаг 1. Создать доску "KanbanTool"

@@ -34,7 +34,7 @@ public class WebTest {
         webSteps.clickElementWithText("Войти");
     }
 
-    @Test
+    @Test(dependsOnMethods = "RestTest.apiTest")
     @Description(value = "Тестирование UI")
     public void uiTest() throws Exception {
         webSteps.openUrl("https://trello.com/");
@@ -50,7 +50,7 @@ public class WebTest {
         webCheck.checkIfCheckboxIsComplete("2.Выучить методы запросов");
 
 //Шаг 3. Поставить обложку с зеленым цветом
-        webSteps.clickElementWithText("Обложка");
+        webSteps.clickButtonContainsText("Обложка");
         webSteps.setColorForCurrentCard("Цвета", Color.GREEN);
 
 //Шаг 4. Отметить, что задача выполнена в срок
@@ -78,10 +78,12 @@ public class WebTest {
 
 //Шаг 7. Добавить описание к доске: Доска создана автотестом
         webSteps.clickButtonContainsText("Меню");
-        webSteps.clickElementContainsText("О доске");
+        webSteps.clickElementWithText("О доске");
         webSteps.clickElementContainsText("для чего используется эта доска");
         webSteps.inputTextInTextBox("Доска создана автотестом");
         webSteps.clickButtonContainsText("Сохранить");
+        webSteps.clickElementContainsText("Вернуться.");
+        webSteps.clickElementContainsText("Закрыть меню доски");
 
 //Шаг 8. Сменить имя доски "Доска для обучения"
         webSteps.setCurrBlock(webSteps.clickHeader("KanbanTool"));
@@ -91,7 +93,13 @@ public class WebTest {
     }
 
     @AfterClass
-    public void after() {
-        //удалить доску
+    public void after() throws Exception {
+        webSteps.clickButtonContainsText("Меню");
+        webSteps.clickElementContainsText("Ещё");
+        webSteps.clickElementContainsText("Закрыть доску");
+        webSteps.setCurrBlock("Закрытие доски");
+        webSteps.inCurrentBlockClickElementWithText("Закрыть");
+        webSteps.clickButtonWithText("Удалить доску навсегда");
+        webSteps.clickButtonContainsText("Удалить");
     }
 }

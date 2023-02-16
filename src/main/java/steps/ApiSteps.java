@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import io.restassured.response.Response;
 import io.restassured.http.ContentType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.PropertiesUtil;
 
 import java.io.File;
@@ -19,9 +21,9 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class ApiSteps {
-
     private static final String KEY = JDBCPostgreSQL.getKey(PropertiesUtil.get("test.user"));
     private static final String TOKEN = JDBCPostgreSQL.getToken(PropertiesUtil.get("test.user"));
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSteps.class);
 
     //--------------------------------ДОСКИ----------------------------------------//
     public String createBoard(String name) throws JSONException {

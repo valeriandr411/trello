@@ -22,7 +22,7 @@ public class WebSteps {
     public void openUrl(String url) {
         Selenide.open(url);
         Selenide.sleep(500);
-        LOGGER.info(String.format("открыта ссылка'%s'",url));
+        LOGGER.info(String.format("открыта ссылка'%s'", url));
     }
 
     @Step("Нажать на элемент, содержащий текст '{text}' ")
@@ -127,7 +127,7 @@ public class WebSteps {
         SelenideElement element = $x(String.format(".//span[contains(text(),'%1$s')]" +
                 "/ancestor::div[@class='pop-over is-shown']", block));
         PageManager.setCurrentBlock(element);
-        LOGGER.info(String.format("установить блок '%1$s' текущим",block));
+        LOGGER.info(String.format("установить блок '%1$s' текущим", block));
     }
 
     public void setCurrBlock(SelenideElement element) {

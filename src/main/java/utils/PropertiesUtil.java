@@ -23,7 +23,6 @@ public final class PropertiesUtil {
                 .getClassLoader()
                 .getResourceAsStream("application.properties")) {
             PROPERTIES.load(inputStream);
-
         } catch (IOException exception) {
             exception.printStackTrace();
         }

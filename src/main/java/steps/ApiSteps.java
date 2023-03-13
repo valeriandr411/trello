@@ -58,18 +58,18 @@ public class ApiSteps {
 
     public List<Map<String, Object>> getBoards() {
         return given()
-        .baseUri("https://api.trello.com/1/members/me")
-        .basePath("/boards")
-        .queryParam("key", KEY)
-        .queryParam("token", TOKEN)
-        .contentType(ContentType.JSON)
-        .when().get()
-        .then()
-        .statusCode(200)
-        .extract()
-        .response()
-        .as(new TypeRef<>() {
-        });
+                .baseUri("https://api.trello.com/1/members/me")
+                .basePath("/boards")
+                .queryParam("key", KEY)
+                .queryParam("token", TOKEN)
+                .contentType(ContentType.JSON)
+                .when().get()
+                .then()
+                .statusCode(200)
+                .extract()
+                .response()
+                .as(new TypeRef<>() {
+                });
     }
 
     public List<Map<String, Object>> getCardsOnBoard(String idBoard) {
@@ -148,7 +148,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //   response.prettyPrint();
     }
 
     //----------------------------------КАРТОЧКИ-------------------------------------------//
@@ -198,7 +197,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //  response.prettyPrint();
     }
 
     /**
@@ -223,7 +221,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //response.prettyPrint();
     }
 
     /**
@@ -246,7 +243,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //  response.prettyPrint();
     }
 
     /**
@@ -271,7 +267,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //    response.prettyPrint();
     }
 
     /**
@@ -302,7 +297,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //   response.prettyPrint();
     }
 //----------------------------------КОЛОНКИ-------------------------------------------//
 
@@ -330,8 +324,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //  response.prettyPrint();
-
         Selenide.sleep(500);
         return response.jsonPath().getString("id");
     }
@@ -357,6 +349,5 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        //   response.prettyPrint();
     }
 }

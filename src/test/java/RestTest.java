@@ -47,9 +47,6 @@ public class RestTest {
 
 //Шаг 12. Отметить пункт в карточке "Выучить методы запросов"
         apiSteps.changeCheckItemState(idCard, idCheckItem_2, "complete");
-        //
-
-//Шаг 13. Поставить в карточке эмоджи Палец вверх
     }
 
 }

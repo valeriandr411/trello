@@ -1,6 +1,5 @@
 package steps;
 
-import com.codeborne.selenide.Selenide;
 import database.JDBCPostgreSQL;
 import io.restassured.common.mapper.TypeRef;
 import org.json.JSONException;
@@ -21,15 +20,16 @@ import static io.restassured.RestAssured.given;
 public class ApiSteps {
     private static final String KEY = JDBCPostgreSQL.getKey(PropertiesUtil.get("test.user"));
     private static final String TOKEN = JDBCPostgreSQL.getToken(PropertiesUtil.get("test.user"));
+    private final String baseUrl = PropertiesUtil.get("base.url.api");
     private static final Logger LOGGER = Logger.getLogger(WebSteps.class);
 
-    //--------------------------------ДОСКИ----------------------------------------//
+    //----------------------------------------------------ДОСКИ-------------------------------------------------------//
     public String createBoard(String name) throws JSONException {
         JSONObject requestBody = new JSONObject()
                 .put("name", name);
         Response response = given()
-                .baseUri("https://api.trello.com/1")
-                .basePath("/boards")
+                .baseUri(baseUrl)
+                .basePath("/1/boards")
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
                 .contentType(ContentType.JSON)
@@ -44,7 +44,7 @@ public class ApiSteps {
 
     public void deleteBoard(String idBoard) {
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath("/1/boards/" + idBoard)
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -58,8 +58,8 @@ public class ApiSteps {
 
     public List<Map<String, Object>> getBoards() {
         return given()
-                .baseUri("https://api.trello.com/1/members/me")
-                .basePath("/boards")
+                .baseUri(baseUrl)
+                .basePath("/1/members/me/boards")
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
                 .contentType(ContentType.JSON)
@@ -74,7 +74,7 @@ public class ApiSteps {
 
     public List<Map<String, Object>> getCardsOnBoard(String idBoard) {
         return given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath("/1/boards/" + idBoard + "/cards")
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -88,12 +88,12 @@ public class ApiSteps {
                 });
     }
 
-    //----------------------------------ЧЕК-ЛИСТ-------------------------------------------//
+    //--------------------------------------------------ЧЕК-ЛИСТ------------------------------------------------------//
     public String createChecklist(String idCard) throws JSONException {
         JSONObject requestBody = new JSONObject()
                 .put("idCard", idCard);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(("/1/checklists"))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -111,7 +111,7 @@ public class ApiSteps {
         JSONObject requestBody = new JSONObject()
                 .put("name", name);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(String.format("/1/checklists/%s/checkItems", idCheckList))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -137,7 +137,7 @@ public class ApiSteps {
         JSONObject requestBody = new JSONObject()
                 .put("state", state);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(String.format("/1/cards/%1s/checkItem/%2s", idCard, idCheckItem))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -150,7 +150,7 @@ public class ApiSteps {
         LOGGER.info(response.asPrettyString());
     }
 
-    //----------------------------------КАРТОЧКИ-------------------------------------------//
+    //-------------------------------------------------КАРТОЧКИ-------------------------------------------------------//
 
     /**
      * Метод, позволяющий создавать карточки
@@ -166,8 +166,8 @@ public class ApiSteps {
                 .put("idList", idList);
 
         Response response = given()
-                .baseUri("https://api.trello.com/1")
-                .basePath("/cards")
+                .baseUri(baseUrl)
+                .basePath("/1/cards")
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
                 .contentType(ContentType.JSON)
@@ -187,7 +187,7 @@ public class ApiSteps {
      */
     public void deleteCard(String idCard) {
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath("/1/cards/" + idCard)
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -210,7 +210,7 @@ public class ApiSteps {
         JSONObject requestBody = new JSONObject()
                 .put("desc", description);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(String.format("/1/cards/%s", idCard))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -232,7 +232,7 @@ public class ApiSteps {
     public void createAttachment(String idCard, String pathName) {
         File file = new File(pathName);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(String.format("/1/cards/%s/attachments", idCard))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -256,7 +256,7 @@ public class ApiSteps {
         JSONObject requestBody = new JSONObject()
                 .put("idList", idList);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(String.format("/1/cards/%s", idCard))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -286,7 +286,7 @@ public class ApiSteps {
         JSONObject requestBody = new JSONObject()
                 .put("start", newDate);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(String.format("/1/cards/%s", idCard))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
@@ -298,7 +298,7 @@ public class ApiSteps {
                 .extract().response();
         LOGGER.info(response.asPrettyString());
     }
-//----------------------------------КОЛОНКИ-------------------------------------------//
+//-------------------------------------------------------КОЛОНКИ------------------------------------------------------//
 
     /**
      * Метод, создающий новую колонку для заданной доски
@@ -313,8 +313,8 @@ public class ApiSteps {
                 .put("name", name)
                 .put("idBoard", idBoard);
         Response response = given()
-                .baseUri("https://api.trello.com/1")
-                .basePath("/lists")
+                .baseUri(baseUrl)
+                .basePath("/1/lists")
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)
                 .contentType(ContentType.JSON)
@@ -324,7 +324,6 @@ public class ApiSteps {
                 .statusCode(200)
                 .extract().response();
         LOGGER.info(response.asPrettyString());
-        Selenide.sleep(500);
         return response.jsonPath().getString("id");
     }
 
@@ -338,7 +337,7 @@ public class ApiSteps {
         JSONObject requestBody = new JSONObject()
                 .put("value", value);
         Response response = given()
-                .baseUri("https://api.trello.com")
+                .baseUri(baseUrl)
                 .basePath(String.format("/1/lists/%s/closed", idList))
                 .queryParam("key", KEY)
                 .queryParam("token", TOKEN)

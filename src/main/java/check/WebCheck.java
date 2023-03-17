@@ -1,7 +1,6 @@
 package check;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.apache.log4j.Logger;
 import support.Color;
@@ -22,18 +21,14 @@ public class WebCheck {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .should(Condition.attributeMatching("class", currentColor))
                 .getAttribute("class");
-        Selenide.sleep(500);
     }
 
     public void checkTextInField(String field, String text) {
         SelenideElement colorBlock = $x(".//h4[contains(text(),'Цвета')]/following-sibling::div[1]");
-
         String actual = colorBlock.$x(String.format(".//button[contains(@class,'%s')]", field))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .should(Condition.text(""))
                 .getAttribute("class");
-
-        Selenide.sleep(500);
     }
 
     /**
@@ -47,7 +42,6 @@ public class WebCheck {
                 String.format("/descendant::h2[text()='%s']", nameList));
         list.shouldBe(Condition.exist.because(String.format("Колонка '%s' не найдена", nameList)),
                 Duration.ofSeconds(TIMEOUT));
-        Selenide.sleep(500);
         LOGGER.info(String.format("Колонка '%1$s' отображается", nameList));
         return list.$x("./parent::div");
     }
@@ -64,7 +58,6 @@ public class WebCheck {
                 .shouldBe(Condition.exist
                                 .because(String.format("В сколнке '%s' не найдена карточка '%s'", list, card)),
                         Duration.ofSeconds(TIMEOUT));
-        Selenide.sleep(500);
         LOGGER.info(String.format("В колонке '%1$s' содержится карточка '%2$s'", list, card));
     }
 
@@ -80,7 +73,6 @@ public class WebCheck {
                 .shouldBe(Condition.exist
                                 .because(String.format("Чекбокс '%s' деактивирован", item)),
                         Duration.ofSeconds(TIMEOUT));
-        Selenide.sleep(500);
         LOGGER.info(String.format("Чекбокс '%1$s' активирован", item));
     }
 }

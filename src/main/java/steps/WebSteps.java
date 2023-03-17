@@ -21,7 +21,6 @@ public class WebSteps {
     @Step("открыть url '{string}'")
     public void openUrl(String url) {
         Selenide.open(url);
-        Selenide.sleep(500);
         LOGGER.info(String.format("открыта ссылка'%s'", url));
     }
 
@@ -32,7 +31,6 @@ public class WebSteps {
                 "| .//a[contains(@title,'%1$s')]", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
-        Selenide.sleep(500);
         LOGGER.info(String.format("нажатие на элемент, содержащий текст '%s'", text));
     }
 
@@ -41,7 +39,6 @@ public class WebSteps {
         $x(String.format(".//span[text()='%1$s']", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
-        Selenide.sleep(500);
         LOGGER.info(String.format("нажатие на элемент c текстом '%s'", text));
     }
 
@@ -51,7 +48,6 @@ public class WebSteps {
                         " | .//h2[contains(text(),'%1$s')]", name))
                         .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT));
         header.click();
-        Selenide.sleep(500);
         LOGGER.info(String.format("клик по заголовку '%s'", name));
         return header;
     }
@@ -62,7 +58,6 @@ public class WebSteps {
         $x(String.format(".//button[text()='%1$s']", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
-        Selenide.sleep(500);
         LOGGER.info(String.format("нажатие на кнопку c текстом '%s'", text));
     }
 
@@ -75,7 +70,6 @@ public class WebSteps {
                 "| .//div[contains(@class,'Buttonsstyles')]/a[text()='%1$s']", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
-        Selenide.sleep(500);
         LOGGER.info(String.format("нажатие на кнопку, содержащую текст '%s'", text));
     }
 
@@ -84,7 +78,6 @@ public class WebSteps {
                 "| .//*[contains(@aria-label,'%1$s')]", name))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
-        Selenide.sleep(500);
         LOGGER.info(String.format("Чекбокс с текстом '%s' активирован", name));
     }
 
@@ -94,7 +87,6 @@ public class WebSteps {
         $x(".//div[@role='textbox']")
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .setValue(text);
-        Selenide.sleep(500);
         LOGGER.info(String.format("в текстовый редактр введено значение'%s'", text));
     }
 
@@ -105,7 +97,6 @@ public class WebSteps {
                 "| .//*[contains(text(),'%1$s')]/following::div/input", field))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .setValue(text);
-        Selenide.sleep(500);
         LOGGER.info(String.format("в поле '%1$s' введено значение '%2$s'", field, text));
     }
     //---------------------------------------------------------------------------------------------------------------//
@@ -118,7 +109,6 @@ public class WebSteps {
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
         closeBlock();
-        Selenide.sleep(500);
         LOGGER.info(String.format("для блока '%1$s' установлен цвет '%2$s'", block, clr));
     }
 
@@ -139,7 +129,6 @@ public class WebSteps {
         SelenideElement block = PageManager.getCurrentBlock();
         block.$x("./following-sibling::input").shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT)).
                 setValue(text);
-        Selenide.sleep(TIMEOUT);
         LOGGER.info(String.format("в текущий блок введен текст '%1$s'", text));
     }
 
@@ -150,7 +139,6 @@ public class WebSteps {
         PageManager.getCurrentBlock().$x(String.format("./descendant::input[contains(@value,'%1$s')]", text))
                 .shouldBe(Condition.exist, Duration.ofSeconds(TIMEOUT))
                 .click();
-        Selenide.sleep(TIMEOUT);
         LOGGER.info(String.format("в текущий блок нажат элемент с текстом'%1$s'", text));
     }
 

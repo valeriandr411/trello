@@ -16,7 +16,7 @@ public class WebTest {
 
     @BeforeClass
     public void setUp() {
-        Configuration.baseUrl = "https://trello.com";
+        Configuration.baseUrl = PropertiesUtil.get("base.url");
         Configuration.browser = PropertiesUtil.get("browser.name");
         Configuration.browserSize = PropertiesUtil.get("browser.size");
         Configuration.browserVersion = PropertiesUtil.get("browser.version");
@@ -34,10 +34,11 @@ public class WebTest {
         webSteps.clickElementWithText("Войти");
     }
 
-    @Test(dependsOnMethods = "RestTest.apiTest")
+ //   @Test(dependsOnMethods = "RestTest.apiTest")
+    @Test
     @Description(value = "Тестирование UI")
     public void uiTest() throws Exception {
-        webSteps.openUrl("https://trello.com/");
+        webSteps.openUrl(PropertiesUtil.get("base.url"));
         login();
         webSteps.clickElementContainsText("KanbanTool");
 
@@ -91,7 +92,6 @@ public class WebTest {
         webSteps.inputTextInCurrBlock("Доска для обучения");
         webSteps.pressKey("ENTER");
     }
-
     @AfterClass
     public void after() throws Exception {
         webSteps.clickButtonContainsText("Меню");

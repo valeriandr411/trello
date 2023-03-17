@@ -19,6 +19,7 @@ public class RestTest {
         String idCard = apiSteps.createCard("Карточка для изучения API", idListBacklog);
 
 //Шаг 4. Добавить вложение в виде любой фотографии
+        //
         String path = "src/test/resources/teddy_bears.png";
         apiSteps.createAttachment(idCard, path);
 
@@ -48,5 +49,4 @@ public class RestTest {
 //Шаг 12. Отметить пункт в карточке "Выучить методы запросов"
         apiSteps.changeCheckItemState(idCard, idCheckItem_2, "complete");
     }
-
 }

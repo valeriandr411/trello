@@ -34,8 +34,7 @@ public class WebTest {
         webSteps.clickElementWithText("Войти");
     }
 
- //   @Test(dependsOnMethods = "RestTest.apiTest")
-    @Test
+    @Test(dependsOnMethods = "RestTest.apiTest")
     @Description(value = "Тестирование UI")
     public void uiTest() throws Exception {
         webSteps.openUrl(PropertiesUtil.get("base.url"));
